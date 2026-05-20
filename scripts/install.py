@@ -21,7 +21,8 @@ def copytree_replace(source: Path, target: Path, force: bool) -> None:
 
 
 def run_repo_init(root: Path, repo: Path, force: bool) -> None:
-    command = [sys.executable, str(root / "archivist.py"), "install", str(repo)]
+    helper = root / "skills" / "archivist" / "scripts" / "archivist.py"
+    command = [sys.executable, str(helper), "install", str(repo)]
     if force:
         command.append("--force")
     subprocess.run(command, check=True)

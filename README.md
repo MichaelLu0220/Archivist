@@ -28,20 +28,11 @@ Local-only files such as root `AGENTS.md`, root `archivist.py`, `.archivist/`, `
 
 ## Install For Codex App
 
-Clone the repository:
+Fast path for Windows PowerShell:
 
-```bash
-git clone https://github.com/MichaelLu0220/Archivist.git
-cd Archivist
+```powershell
+$dir = Join-Path $env:TEMP "Archivist"; if (Test-Path $dir) { Remove-Item $dir -Recurse -Force }; git clone https://github.com/MichaelLu0220/Archivist.git $dir; python "$dir\scripts\install.py"
 ```
-
-Install the skill into your Codex home:
-
-```bash
-python scripts/install.py
-```
-
-On Windows, if `python` is not on `PATH`, use your installed Python executable path.
 
 Then restart Codex App or open a new chat. Trigger Archivist with one of:
 
@@ -53,12 +44,30 @@ Archivist sync
 
 `Archivist sync` is the safest plain-text fallback in Codex App, because `@Archivist` may be parsed as a file or folder mention.
 
-## Initialize A Target Repo
-
-To add Archivist runtime files to another repository:
+Developer install:
 
 ```bash
-python skills/archivist/scripts/archivist.py install /path/to/target/repo
+git clone https://github.com/MichaelLu0220/Archivist.git
+cd Archivist
+python scripts/install.py
+```
+
+On Windows, if `python` is not on `PATH`, use your installed Python executable path.
+
+To initialize the current repo at the same time:
+
+```powershell
+$repo = (Get-Location).Path; $dir = Join-Path $env:TEMP "Archivist"; if (Test-Path $dir) { Remove-Item $dir -Recurse -Force }; git clone https://github.com/MichaelLu0220/Archivist.git $dir; python "$dir\scripts\install.py" --init-repo "$repo"
+```
+
+## Optional: Initialize A Target Repo
+
+After `python scripts/install.py`, the Archivist skill is globally available in Codex App. The one-line PowerShell command above already runs that installer for you.
+
+This extra step is only needed if you want to prepare a specific repository with repo-local runtime files and the helper CLI ahead of time:
+
+```bash
+python scripts/install.py --init-repo /path/to/target/repo
 ```
 
 This creates:
@@ -111,9 +120,9 @@ Available commands:
 Archivist proposals use this shape:
 
 ```text
-1. [ADD] <Section> ??<concise content>
-2. [MOD] <Section> #<existing item number>: <old> ??<new>
-3. [DEL] <Section> #<existing item number>: <content> ??<short reason>
+1. [ADD] <Section> → <concise content>
+2. [MOD] <Section> #<existing item number>: <old> → <new>
+3. [DEL] <Section> #<existing item number>: <content> ← <short reason>
 4. [!!] <Section> #<existing item number> conflict: existing "<old>" vs new "<new>"
 ```
 
@@ -133,10 +142,4 @@ Run:
 python -m unittest discover -s tests
 ```
 
-If you are testing from a checkout where root `archivist.py` is absent, set `PYTHONPATH` to the tracked helper location first:
-
-```powershell
-$env:PYTHONPATH = "skills/archivist/scripts"
-python -m unittest discover -s tests
-```
-
+Tests import the tracked helper from `skills/archivist/scripts`; root `archivist.py` is local-only and not required.

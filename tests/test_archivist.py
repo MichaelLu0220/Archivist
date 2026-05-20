@@ -1,6 +1,9 @@
 import unittest
+import sys
 from pathlib import Path
 from tempfile import TemporaryDirectory
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "skills" / "archivist" / "scripts"))
 
 from archivist import TRIGGER_HEADING, apply_proposals, init_repo, parse_proposals, parse_selection
 
