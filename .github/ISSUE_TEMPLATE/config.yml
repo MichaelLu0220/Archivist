@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Questions and ideas
+    url: https://github.com/MichaelLu0220/Archivist/discussions
+    about: Use GitHub Discussions for open-ended ideas, questions, and examples.

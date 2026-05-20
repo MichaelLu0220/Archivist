@@ -4,6 +4,21 @@ Archivist is a Codex skill for maintaining durable project memory in `AGENTS.md`
 
 It is deliberately small: no UI, no marketplace, no multi-agent system. Its job is to help Codex decide which project decisions are worth saving, propose concise changes in chat, and only update `AGENTS.md` after explicit human confirmation.
 
+## Contents
+
+- [What It Does](#what-it-does)
+- [Why Archivist](#why-archivist)
+- [Demo](#demo)
+- [Repository Layout](#repository-layout)
+- [Install For Codex App](#install-for-codex-app)
+- [Optional: Initialize A Target Repo](#optional-initialize-a-target-repo)
+- [Workflow](#workflow)
+- [Helper CLI](#helper-cli)
+- [Proposal Format](#proposal-format)
+- [Development](#development)
+- [Contributing](#contributing)
+- [License](#license)
+
 ## What It Does
 
 - Reads visible project context and existing `AGENTS.md` rules.
@@ -12,10 +27,58 @@ It is deliberately small: no UI, no marketplace, no multi-agent system. Its job 
 - Requires chat confirmation before changing `AGENTS.md`.
 - Keeps runtime state in `.archivist/`, which should stay local and git ignored.
 
+## Why Archivist
+
+AI coding sessions are powerful, but project memory tends to drift. Important decisions get buried in chat history, repeated in prompts, or pasted into oversized notes that every future session has to reread.
+
+Archivist keeps that memory small and intentional:
+
+- Reduces token waste by keeping durable repo rules in a compact `AGENTS.md` instead of repeatedly pasting long context.
+- Tracks the last sync point in `.archivist/state.json`, so each sync can focus on what changed since the previous archival pass.
+- Preserves only long-term project knowledge, such as architecture decisions, coding style, workflow preferences, tooling conventions, and hard project rules.
+- Leaves temporary debugging notes, one-off discussion, unresolved brainstorming, and casual chat out of permanent memory.
+- Proposes changes before writing them, so humans stay in control of what becomes project memory.
+- Flags conflicts as `[!!]` instead of guessing, which helps prevent stale or contradictory instructions from silently entering `AGENTS.md`.
+
+In short: Archivist is not a knowledge base. It is memory governance for AI-assisted development.
+
+## Demo
+
+Archivist turns chat decisions into confirmed project memory:
+
+```text
+User: Archivist sync
+
+Archivist:
+1. [ADD] Workflow ??Keep proposed.patch.md as a temporary audit copy; chat is the confirmation interface
+2. [ADD] Project Rules ??Do not auto-apply [!!] conflict items
+
+Accept which items? (examples: 1,3 / all / none / item number + edited text)
+
+User: all
+```
+
+Result:
+
+```markdown
+## Workflow
+
+- Keep proposed.patch.md as a temporary audit copy; chat is the confirmation interface
+
+## Project Rules
+
+- Do not auto-apply [!!] conflict items
+```
+
+Planned demo asset: add a short GIF showing `Archivist sync` creating proposals and updating `AGENTS.md` after confirmation.
+
 ## Repository Layout
 
 ```text
 README.md                                  Project overview and setup
+CONTRIBUTING.md                            Contribution guide
+CHANGELOG.md                               Release notes
+.github/ISSUE_TEMPLATE/                    GitHub issue templates
 scripts/install.py                         Installs the Codex skill
 skills/archivist/SKILL.md                  Codex skill entrypoint
 skills/archivist/references/workflow.md    Detailed archival rules
@@ -134,12 +197,41 @@ Supported `AGENTS.md` sections:
 - `Tooling`
 - `Project Rules`
 
-## Tests
+## Development
 
-Run:
+Run tests:
 
 ```bash
 python -m unittest discover -s tests
 ```
 
 Tests import the tracked helper from `skills/archivist/scripts`; root `archivist.py` is local-only and not required.
+
+Suggested GitHub topics:
+
+```text
+codex
+ai-coding
+developer-tools
+agents
+project-memory
+python
+cli
+```
+
+Use GitHub Releases once the project has a stable install flow. Keep release notes in `CHANGELOG.md`.
+
+## Contributing
+
+Issues and pull requests are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
+
+Useful first contributions:
+
+- Add a real GIF demo.
+- Add example `AGENTS.md` before-and-after files.
+- Improve Windows and macOS install troubleshooting.
+- Add tests for proposal parsing and conflict handling.
+
+## License
+
+No open-source license has been declared yet. Add a `LICENSE` file before inviting broad reuse or external contributions.
