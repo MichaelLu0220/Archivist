@@ -27,5 +27,7 @@ env/
 .DS_Store
 Thumbs.db
 
-# Files
+# Local-only files
+AGENTS.md
+/archivist.py
 blog-archivist.md
