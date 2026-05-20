@@ -44,14 +44,14 @@ In short: Archivist is not a knowledge base. It is memory governance for AI-assi
 
 ## Demo
 
-Archivist turns chat decisions into confirmed project memory:
+Archivist turns chat decisions into confirmed project memory. It proposes changes in chat first, then updates `AGENTS.md` only after confirmation:
 
 ```text
 User: Archivist sync
 
 Archivist:
-1. [ADD] Workflow ??Keep proposed.patch.md as a temporary audit copy; chat is the confirmation interface
-2. [ADD] Project Rules ??Do not auto-apply [!!] conflict items
+1. [ADD] Workflow → Keep .archivist/proposed.patch.md as a temporary audit copy; chat is the confirmation interface
+2. [ADD] Project Rules → Do not auto-apply [!!] conflict items
 
 Accept which items? (examples: 1,3 / all / none / item number + edited text)
 
@@ -63,14 +63,14 @@ Result:
 ```markdown
 ## Workflow
 
-- Keep proposed.patch.md as a temporary audit copy; chat is the confirmation interface
+- Keep .archivist/proposed.patch.md as a temporary audit copy; chat is the confirmation interface
 
 ## Project Rules
 
 - Do not auto-apply [!!] conflict items
 ```
 
-Planned demo asset: add a short GIF showing `Archivist sync` creating proposals and updating `AGENTS.md` after confirmation.
+See the complete before/proposal/after example in [`examples/`](examples/).
 
 ## Repository Layout
 
@@ -78,7 +78,9 @@ Planned demo asset: add a short GIF showing `Archivist sync` creating proposals 
 README.md                                  Project overview and setup
 CONTRIBUTING.md                            Contribution guide
 CHANGELOG.md                               Release notes
+LICENSE                                    MIT license
 .github/ISSUE_TEMPLATE/                    GitHub issue templates
+examples/                                  Before/proposal/after AGENTS.md examples
 scripts/install.py                         Installs the Codex skill
 skills/archivist/SKILL.md                  Codex skill entrypoint
 skills/archivist/references/workflow.md    Detailed archival rules
@@ -234,4 +236,4 @@ Useful first contributions:
 
 ## License
 
-No open-source license has been declared yet. Add a `LICENSE` file before inviting broad reuse or external contributions.
+MIT. See [LICENSE](LICENSE).
