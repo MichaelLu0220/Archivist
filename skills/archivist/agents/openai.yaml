@@ -1,0 +1,4 @@
+interface:
+  display_name: "Archivist"
+  short_description: "Archive durable project memory into AGENTS.md"
+  default_prompt: "Use $archivist to run the archival workflow for this repo now."

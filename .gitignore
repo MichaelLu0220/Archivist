@@ -1,0 +1,31 @@
+# Local runtime state
+.archivist/
+.codex/
+.tmp-install-test/
+
+# Python cache and tooling output
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Editor and OS files
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Files
+blog-archivist.md
